@@ -45,7 +45,7 @@ function Employee({ darkMode }) {
   });
 
   const internCount = employees.filter(
-  (emp) => emp.role.toLowerCase() === "intern"
+  (emp) => emp.role.toLowerCase().includes("intern")
 ).length;
 
 const engineerCount = employees.filter(
@@ -403,6 +403,12 @@ fontWeight: "700",
   >
     Engineers
   </button>
+    <button
+    onClick={() => setFilterRole("All")}
+    className="bg-violet-600 text-white px-4 py-2 rounded"
+  >
+    Others
+  </button>
 </div>
       {/* SEARCH */}
       <div className="p-4 rounded-xl shadow-md mb-6"
@@ -463,25 +469,29 @@ style={{
           }
         />
 
-        <input
+       <select
   className="w-full p-2 border mb-3 rounded"
   style={{
     background: darkMode ? "#374151" : "white",
     color: darkMode ? "white" : "black",
   }}
-          placeholder="Role"
-          value={form.role}
-          onChange={(e) =>
-            setForm({ ...form, role: e.target.value })
-          }
-        />
+  value={form.role}
+  onChange={(e) =>
+    setForm({ ...form, role: e.target.value })
+  }
+>
+  <option value="">Select Role</option>
+  <option value="Intern">Intern</option>
+  <option value="Engineer">Engineer</option>
+  <option value="Other">Other</option>
+</select>
 
-        <button
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          type="submit"
-        >
-          {editId ? "Update Employee" : "Add Employee"}
-        </button>
+<button
+  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+  type="submit"
+>
+  {editId ? "Update Employee" : "Add Employee"}
+</button>
       </form>
 
       <div
