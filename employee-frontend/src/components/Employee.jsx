@@ -59,21 +59,22 @@ const chartData = {
   labels: ["Interns", "Engineers", "Others"],
   datasets: [
     {
-      label: "Employees",
+      label: "",
       data: [
         internCount,
         engineerCount,
         otherCount,
       ],
       backgroundColor: [
-        "#3b82f6",
-        "#10b981",
-        "#f59e0b",
+        "#3b82f6", // Interns
+        "#10b981", // Engineers
+        "#f59e0b", // Others
       ],
-      borderRadius: 8,
+      borderRadius: 10,
     },
   ],
 };
+
 const pieData = {
   labels: ["Interns", "Engineers", "Others"],
   datasets: [
@@ -224,7 +225,9 @@ const exportToPDF = () => {
             boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
           }}
         >
-          <h3>👥 Total Employees</h3>
+ <h3>
+  👥 Total Employees
+</h3>
           <h1>{employees.length}</h1>
         </div>
 
@@ -270,48 +273,108 @@ const exportToPDF = () => {
 </button>
 <div
   style={{
-    background: darkMode ? "#1f2937" : "white",
-    padding: "20px",
-    borderRadius: "10px",
+    display: "flex",
+    gap: "20px",
     marginBottom: "20px",
   }}
 >
-  <h2
+  <div
     style={{
-      marginBottom: "15px",
-      textAlign: "center",
+      flex: 1,
+      background: darkMode ? "#1f2937" : "white",
+      padding: "20px",
+      borderRadius: "10px",
     }}
   >
-    📊 Employee Roles Distribution
-  </h2>
-
-  <Bar data={chartData} />
-  <div
+<h2
   style={{
-    background: darkMode ? "#1f2937" : "white",
-    padding: "20px",
-    borderRadius: "10px",
-    marginTop: "20px",
+    textAlign: "center",
+    fontSize: "20px",
+    fontWeight: "700",
+    color: darkMode ? "white" : "#111827",
   }}
 >
-  <h2
-    style={{
-      textAlign: "center",
-      marginBottom: "15px",
-    }}
-  >
-    🥧 Employee Distribution
-  </h2>
+  📊 Employee Roles Distribution
+</h2>
 
-  <div
-    style={{
-      width: "350px",
-      margin: "0 auto",
-    }}
-  >
-    <Pie data={pieData} />
-  </div>
+<div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    gap: "20px",
+    marginBottom: "20px",
+    fontSize: "16px",
+fontWeight: "700",
+  }}
+>
+  <span style={{ color: "#3b82f6" }}>● Interns</span>
+  <span style={{ color: "#10b981" }}>● Engineers</span>
+  <span style={{ color: "#f59e0b" }}>● Others</span>
 </div>
+
+<div
+  style={{
+    height: "400px",
+    margin: "0 auto",
+  }}
+>
+<Bar
+  data={chartData}
+  options={{
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  }}
+/>
+</div>
+  </div>
+
+<div
+  style={{
+    flex: 1,
+    background: darkMode ? "#1f2937" : "white",
+    padding: "20px",
+    paddingBottom: "50px",
+    borderRadius: "10px",
+  }}
+>
+    <h2
+      style={{
+    textAlign: "center",
+    fontSize: "20px",
+    fontWeight: "700",
+    color: darkMode ? "white" : "#111827",
+  }}
+>
+      🧮 Employee Distribution
+    </h2>
+<div
+  style={{
+    height: "400px",
+    width: "400px",
+    margin: "30px auto 0 auto",
+  }}
+>
+<Pie
+  data={pieData}
+  options={{
+    maintainAspectRatio: false,
+    plugins: {
+    legend: {
+  position: "top",
+  align: "center",
+  labels: {
+    padding: 15,
+  },
+}
+    },
+  }}
+/>
+</div>
+  </div>
 </div>
 <div
   style={{
@@ -510,11 +573,19 @@ style={{
           {" "}
 
           <button
-            onClick={() => handleDelete(emp.id)}
-            className="bg-red-500 text-white px-3 py-1 rounded"
-          >
-            Delete
-          </button>
+  onClick={() => {
+    const confirmDelete = window.confirm(
+      "⚠️ Are you sure you want to delete this employee?"
+    );
+
+    if (confirmDelete) {
+      handleDelete(emp.id);
+    }
+  }}
+  className="bg-red-500 text-white px-3 py-1 rounded"
+>
+  Delete
+</button>
         </td>
       </tr>
     ))}

@@ -5,20 +5,35 @@ import Login from "./Login";
 function App() {
 const [loggedIn, setLoggedIn] = useState(false);
 const [darkMode, setDarkMode] = useState(false);
-
+const gradientStyle = `
+@keyframes dashboardBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+`;
 if (!loggedIn) {
 return <Login onLogin={() => setLoggedIn(true)} />;
 }
 
 return (
-<div
-  style={{
-    background: darkMode ? "#111827" : "#f4f6f9",
-    color: darkMode ? "white" : "black",
-    minHeight: "100vh",
-    padding: "30px",
-    transition: "0.3s",
-  }}
+  <>
+    <style>{gradientStyle}</style>
+
+    <div
+ style={{
+  background: darkMode
+    ? "#111827"
+    : "linear-gradient(-45deg, #dbecfe, #93c5fd, #60a5fa, #3bf6ed)",
+  backgroundSize: "400% 400%",
+  animation: darkMode
+    ? "none"
+    : "dashboardBG 15s ease infinite",
+  color: darkMode ? "white" : "black",
+  minHeight: "100vh",
+  padding: "30px",
+  transition: "0.3s",
+}}
 >
 <div
 style={{
@@ -30,7 +45,7 @@ marginBottom: "30px",
 > <div>
 <h1
 style={{
-color: "#2563eb",
+color: "#4d25eb",
 fontSize: "40px",
 margin: 0,
 }}
@@ -39,13 +54,12 @@ Smart Employee Management Dashboard </h1>
 
       <p
   style={{
-    color: darkMode ? "#d1d5db" : "#6b7280",
+    color: darkMode ? "#d9d1db" : "#796b80",
   }}
 >
         Built with React, FastAPI & SQLite
       </p>
     </div>
-
     <div style={{ display: "flex", gap: "10px" }}>
   <button
     onClick={() => setDarkMode(!darkMode)}
@@ -58,13 +72,13 @@ Smart Employee Management Dashboard </h1>
       cursor: "pointer",
     }}
   >
-    {darkMode ? "☀️ Light" : "🌙 Dark"}
+    {darkMode ? "💡 Light" : "🌙 Dark"}
   </button>
 
   <button
     onClick={() => setLoggedIn(false)}
     style={{
-      background: "#ef4444",
+      background: "#f00d0d",
       color: "white",
       border: "none",
       padding: "10px 20px",
@@ -80,17 +94,18 @@ Smart Employee Management Dashboard </h1>
   <>
   <h2
     style={{
-     color: darkMode ? "white" : "#374151",
-      marginBottom: "20px",
-    }}
+  fontSize: "20px",
+  fontWeight: "700",
+  color: darkMode ? "white" : "#1f2937",
+}}
   >
-    Welcome, Gayathri 👋
+    Welcome, Gayathri 👋🏻
   </h2>
 
   <Employee darkMode={darkMode} />
 </>
 </div>
-
+  </>
 );
 }
 
